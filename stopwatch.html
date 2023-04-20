@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Stop Watch</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This is a Digital Clock.">
+    <meta name="author" content="Bruce Bainomugisha">
+    <meta name="keywords" content="digital, clock, watch, time, stopwatch, stopclock">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="kisspng-portable-network-graphics-computer-icons-vector-gr-clock-png-transparent-images-pictures-photos-png-5c7e9f9d07e107.4618779715518022690323.png" type="image/png">
+    
+    <style>
+        body {
+            background-color: black;
+        }
+
+        .timerBtn{
+            width: 50px;
+            height: 50px;
+            border-radius: 27.5px;
+            font-size: 10.5px;
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .timerBtn:hover {
+            opacity: 0.8;
+        }
+
+        #startBtn {
+            background-color: #06f81a25;
+            color: rgb(5, 245, 5);
+            border: none;
+        }
+        #pauseBtn {
+            background-color: #da080825;
+            color: rgb(245, 5, 5);
+            border: none;
+        }
+        #resetBtn {
+            background-color: #333333;
+            color: white;
+            border: none;
+        }
+        .dgt-watch-link {
+            margin-top: 15px;
+            border-radius: 12px;
+            border: none;
+            padding: 5px 10px;
+            font-size: 10.5px;
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+            box-shadow: 0 2px 2px rgba(245, 245, 245, 0.95);
+        }
+
+        #timeDisplay{
+            font-size: 75px;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+        }
+        #timeContainer{
+            text-align: center;
+            border: 3px solid;
+            border-radius: 25px;
+            background-color: #222222;
+            padding: 30px 0 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="timeContainer">
+        <div id="timeDisplay">00:00:00:00</div>
+        <button id="startBtn" class="timerBtn">Start</button>
+        <button id="pauseBtn" class="timerBtn">Pause</button>
+        <button id="resetBtn" class="timerBtn">Reset</button><br>
+        <a href="digital_clock.html"><button class="dgt-watch-link">Back to Digital Clock</button></a>
+    </div>
+    <script>
+        const timeDisplay = document.querySelector("#timeDisplay");
+        const startBtn = document.querySelector("#startBtn");
+        const pauseBtn = document.querySelector("#pauseBtn");
+        const resetBtn = document.querySelector("#resetBtn");
+
+        let startTime = 0;
+        let elapsedTime = 0;
+        let currentTime = 0;
+        let paused = true;
+        let intervalId;
+        let hrs = 0;
+        let mins = 0;
+        let secs = 0;
+        let centisecs = 0;
+
+        startBtn.addEventListener("click", () => {
+            if(paused){
+                paused = false;
+                startTime = Date.now() - elapsedTime;
+                intervalId = setInterval(updateTime, 45);
+                startBtn.innerHTML = "Start";
+            }
+        });
+        pauseBtn.addEventListener("click", () => {
+            if(!paused){
+                paused = true;
+                elapsedTime = Date.now() - startTime;
+                clearInterval(intervalId);
+                startBtn.innerHTML = "Resume";
+            }
+        });
+        resetBtn.addEventListener("click", () => {
+            paused = true;
+            clearInterval(intervalId);
+            startTime = 0;
+            elapsedTime = 0;
+            currentTime = 0;
+            hrs = 0;
+            mins = 0;
+            secs = 0;
+            centisecs = 0;
+            timeDisplay.textContent = "00:00:00:00";
+            startBtn.innerHTML = "Start";
+        });
+
+        function updateTime(){
+            elapsedTime = Date.now() - startTime;
+
+            centisecs = Math.floor((elapsedTime / 10) % 100);
+            secs = Math.floor((elapsedTime / 1000) % 60);
+            mins = Math.floor((elapsedTime / (1000 * 60)) % 60);
+            hrs = Math.floor((elapsedTime / (1000 * 60 * 60)) % 60);
+
+            centisecs = pad(centisecs);
+            secs = pad(secs);
+            mins = pad(mins);
+            hrs = pad(hrs);
+
+            timeDisplay.textContent = `${hrs}:${mins}:${secs}:${centisecs}`;
+
+            function pad(unit){
+                return (("0") + unit).length > 2 ? unit : "0" + unit;
+            }
+        }
+    </script>
+</body>
+</html>
