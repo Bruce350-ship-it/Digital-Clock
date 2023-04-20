@@ -1,0 +1,42 @@
+body {
+	background-color: rgb(220, 220, 220);
+}
+
+.clock {
+	text-align: center;
+	border: none;
+	border-radius: 25px;
+	font-family: 'Roboto', sans-serif;
+	background-color: #adadad;
+	padding: 40px 0 5px 0;
+}
+
+.time {
+	font-size: 57.5px;
+	font-weight: 600;
+}
+
+#toggleButton {
+	border-radius: 15px;
+	border: none;
+	padding: 7.5px 15px;
+	font-size: 11.5px;
+	font-weight: bold;
+	cursor: pointer;
+	font-family: 'Roboto', sans-serif;
+}
+.stp-watch-link {
+	margin-top: 15px;
+	border-radius: 12px;
+	border: none;
+	padding: 5px 10px;
+	font-size: 10.5px;
+	cursor: pointer;
+	font-family: 'Roboto', sans-serif;
+	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+	background-color: #dbdbdb;
+	transition: 0.2s;
+}
